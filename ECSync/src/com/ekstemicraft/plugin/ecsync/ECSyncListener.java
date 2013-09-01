@@ -2,6 +2,7 @@ package com.ekstemicraft.plugin.ecsync;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class ECSyncListener implements Listener {
@@ -21,6 +22,11 @@ public class ECSyncListener implements Listener {
 		} catch (Exception e) {
 			pl.getLogger().severe("Error at playerLoginSync: " +  e);
 		}
+		/** Listens on PlayerJoinEvent, and calls loadUserIDfromDB() when a player joins. 
+		 * Gonna change to AsyncPlayerPreLoginEvent to save shit.
+		 *
+		 */
+		
 	}
 	
 	
