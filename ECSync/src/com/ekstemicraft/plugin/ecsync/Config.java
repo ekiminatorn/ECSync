@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
-
 public class Config {
 
 	public ECSync plugin;
@@ -41,8 +38,6 @@ public class Config {
 	
 	
 	public void load(){
-		Bukkit.broadcastMessage("hi!");
-		ECSync.main.getLogger().info("Please");
 		simpleSyncronizationGroupMap = ECSync.main.getConfig().getConfigurationSection("group-mapping").getValues(true);
 	//Loads group-map to HashMap upon initializion.
 	}

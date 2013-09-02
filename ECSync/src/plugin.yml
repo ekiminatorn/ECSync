@@ -1,22 +1,9 @@
 name: ECSync
-description: ECSync
+description: Syncs player 'tags' to the forum software.
 author: Emil Ekstrom aka Uncle_Emil. On bukkit forums known as Ekstemi
 website: http://ekstemicraft.com
 main: com.ekstemicraft.plugin.ecsync.ECSync
-version: 0.1
-commands:
-    sch:
-        description: Toggle Staff Channel
-        usage: /<command>
-    schannel:
-        description: Toggle Staff Channel
-        usage: /<command>
-    staffchannel:
-        description: Toggle Staff Channel
-        usage: /<command>
-permissions:
-    ecstaffchat.bullshit:
-        description: Allows recievement of StaffChannel messages
-        default: op
+version: 1.0
+
 
   

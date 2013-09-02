@@ -18,9 +18,7 @@ public class PermissionManagerVault {
 	
 	public String[] getGroups(String playerName){
 		
-		Config config = new Config(null);
-		String s = config.getWebappGroupIDbyGroupName("premium");
-		Bukkit.broadcastMessage(s);
+
 		return vault.getPlayerGroups((String) null, playerName);
 		/** Gets the players groups using Vault
 		 * 

@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ECSync extends JavaPlugin{
 
-private static final ECSync instance = new ECSync();  //This makes sure I can access plugin.etcblah using <classname>.main in other classes.
+
 public static ECSync main; //This makes sure I can access plugin.etcblah using <classname>.main in other classes.
 	@Override
 	public void onEnable() {
