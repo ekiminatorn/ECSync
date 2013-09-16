@@ -99,8 +99,9 @@ public class ECSCommandExecutor implements CommandExecutor {
 				}
 					if(verifyresult == 1){
 						sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.GREEN + "Succesfully verified! You have now build rights.");
-						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player addgroup " + playerName + "newbie");
-						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + playerName + "default");
+						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player addgroup " + playerName + " newbie");
+						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + playerName + " default");
+						Bukkit.getLogger().info(playerName + " received build rights.");
 					}
 				    if(verifyresult == 2){
 				    	sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.GREEN + "You are already verified!");
