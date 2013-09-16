@@ -38,10 +38,7 @@ public class Config {
 	
 	
 	public void load(){
-		simpleSyncronizationGroupMap = ECSync.main.getConfig().getConfigurationSection("group-mapping").getValues(true);
+		simpleSyncronizationGroupMap = ECSync.main.getConfig().getConfigurationSection("groups.group-mapping").getValues(true);
 	//Loads group-map to HashMap upon initializion.
 	}
-	
-	
-	
 }

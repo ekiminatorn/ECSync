@@ -8,20 +8,21 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-
 import com.mysql.jdbc.PreparedStatement;
 
 public class SQl  {
 
-	public Map<String, String> playerUserIDs = new HashMap<String, String>();
-	public Map<String, String> webPlayerGroupIDs = new HashMap<String, String>();
-
+	public static Map<String, String> playerUserIDs = new HashMap<String, String>();
+	public static Map<String, String> webPlayerGroupIDs = new HashMap<String, String>();
+    public ECSync pl;
 	public void loadUserIDfromDB(String playerName) throws Exception{
 
 	Class.forName("com.mysql.jdbc.Driver");
+	pl = ECSync.main;
+	
+	Connection con = DriverManager.getConnection("jdbc:mysql://" + pl.getConfig().getString("database.ip") + ":3306/" + pl.getConfig().getString("database.database"), pl.getConfig().getString("database.user"), pl.getConfig().getString("database.password"));
 
-	Connection con = DriverManager.getConnection("jdbc:mysql://162.218.90.17:3306/xenforum", "emil", "geiWee0h");
-	//Probably gonna change the credentials to config file, so they aren't exposed to the world ;)
+	//Changed credential fetching from the config instead!
 	PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT * FROM xf_user_field_value WHERE field_id = 'minecraft_username' AND field_value = '" + playerName + "'");
 	ResultSet result = statement.executeQuery();
 	String userID = null;
@@ -37,6 +38,7 @@ public class SQl  {
 	}else{
 		//log that user exists in the forum software
 		playerUserIDs.put(playerName, userID);
+
 		Bukkit.getLogger().info("[ECSync] " + playerName + " Linked with userID " + userID);
 		con.close();
 		webUserGroupID(playerName);
@@ -44,15 +46,15 @@ public class SQl  {
 /** Gets user ID from xenforo. Called when a player joins the server
  * 
  */
-  }
-	
+  }	
 	
 	public void webUserGroupID(String playerName) throws Exception{
 
+		pl = ECSync.main;
 		Class.forName("com.mysql.jdbc.Driver");
 
-		Connection con = DriverManager.getConnection("jdbc:mysql://162.218.90.17:3306/xenforum", "emil", "geiWee0h");
-		//Probably gonna change the credentials to config file, so they aren't exposed to the world ;)
+		Connection con = DriverManager.getConnection("jdbc:mysql://" + pl.getConfig().getString("database.ip") + ":3306/" + pl.getConfig().getString("database.database"), pl.getConfig().getString("database.user"), pl.getConfig().getString("database.password"));
+		//Changed credentials fetching from config instead!
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT user_group_id FROM xf_user WHERE user_id = '" + getUserID(playerName) + "'");
 		ResultSet result = statement.executeQuery();
 		String groupID = null;
@@ -78,7 +80,7 @@ public class SQl  {
     public void updateWebUserGroupID(String playerName, String groupID) throws Exception{
     	Class.forName("com.mysql.jdbc.Driver");
     	
-		Connection con = DriverManager.getConnection("jdbc:mysql://162.218.90.17:3306/xenforum", "emil", "geiWee0h");
+    	Connection con = DriverManager.getConnection("jdbc:mysql://" + pl.getConfig().getString("database.ip") + ":3306/" + pl.getConfig().getString("database.database"), pl.getConfig().getString("database.user"), pl.getConfig().getString("database.password"));
 		PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE xf_user SET user_group_id = " + groupID + " WHERE user_id = " + getUserID(playerName));
 		statement.executeUpdate();
 
@@ -138,7 +140,6 @@ public class SQl  {
 				Bukkit.getLogger().severe("Error at playerSync() Buy part: " + e.getMessage());
 			}
     	   }
-    	   //Coming to this shortly!
     	   return;
        }
 		if (!Groups[0].equalsIgnoreCase(config.getGroupNamebyGroupID(webGroup))){
@@ -153,10 +154,54 @@ public class SQl  {
 		}
 		
 		return;
-	/** This is where syncing happens. Not fully working yet! Some MySQL statements needed
+	/** 
+	 * This is where syncing happens. 
 	 * 
-	 */
+	 */		
+	}
+	
+	public int isVerified(String playerName) throws Exception{
+		Class.forName("com.mysql.jdbc.Driver");
+		pl = ECSync.main;
 		
-	}	
+		String verified = null;
+		String userState = null;
+
+		Connection con = DriverManager.getConnection("jdbc:mysql://" + pl.getConfig().getString("database.ip") + ":3306/" + pl.getConfig().getString("database.database"), pl.getConfig().getString("database.user"), pl.getConfig().getString("database.password"));
+		//Changed credentials to be fetched from the config instead!
+		PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT is_verified FROM xf_user WHERE user_id = '" + getUserID(playerName) + "'");
+		ResultSet resultVerified = statement.executeQuery();
+		PreparedStatement statement2 = (PreparedStatement) con.prepareStatement("SELECT user_state FROM xf_user WHERE user_id = '" + getUserID(playerName) + "'");
+		ResultSet resultUserState = statement2.executeQuery();
+		
+		if (resultVerified.next()){
+			verified = resultVerified.getString("is_verified");
+		}
+		if (resultUserState.next()){
+			userState = resultUserState.getString("user_state");
+		}
+		if(userState.equalsIgnoreCase("valid")){ //If email is confirmed
+			
+			if(verified.equalsIgnoreCase("0")){ //If user is not verified yet.
+			
+			PreparedStatement statement3 = (PreparedStatement) con.prepareStatement("UPDATE xf_user SET is_verified = 1 WHERE user_id = " + getUserID(playerName));
+			statement3.executeUpdate();
+			return 1; //Success!
+			}
+			else{
+			return 2; //Already verified!
+		 }	
+		}
+		return 3; //Account not email confirmed!
+		
+		/**
+		 * Method for checking if user is email confirmed and verify state is 0 (is not verified.)
+		 * If the user is not verified, and the email is confirmed, changes verify state to 1 (is verified)
+		 * And returns three states:
+		 * 1: Success, changes player permission group to newbie (Got build rights.).
+		 * 2: User is already verified on the site.
+		 * 3: Account email is not confirmed.
+		 */
+	}
 	
 }
