@@ -46,7 +46,40 @@ public class SQl  {
 /** Gets user ID from xenforo. Called when a player joins the server
  * 
  */
-  }	
+  }
+	
+	public void loadUserIDfromDBForVerifyCommand(String playerName) throws Exception{
+
+	Class.forName("com.mysql.jdbc.Driver");
+	pl = ECSync.main;
+	
+	Connection con = DriverManager.getConnection("jdbc:mysql://" + pl.getConfig().getString("database.ip") + ":3306/" + pl.getConfig().getString("database.database"), pl.getConfig().getString("database.user"), pl.getConfig().getString("database.password"));
+
+	//Changed credential fetching from the config instead!
+	PreparedStatement statement = (PreparedStatement) con.prepareStatement("SELECT * FROM xf_user_field_value WHERE field_id = 'minecraft_username' AND field_value = '" + playerName + "'");
+	ResultSet result = statement.executeQuery();
+	String userID = null;
+
+	if (result.next()){
+		userID = result.getString("user_id");
+	}
+	if (userID == null){
+		Bukkit.getLogger().info("[ECSync] " + playerName + " Not Linked");
+		con.close();
+		//log that user doesn't exists in the forum software
+
+	}else{
+		//log that user exists in the forum software
+		playerUserIDs.put(playerName, userID);
+
+		Bukkit.getLogger().info("[ECSync] " + playerName + " Linked with userID " + userID);
+		con.close();
+
+	}
+/** Gets user ID from xenforo. Called when player executes /verify
+ * 
+ */
+  }
 	
 	public void webUserGroupID(String playerName) throws Exception{
 
@@ -186,6 +219,7 @@ public class SQl  {
 			
 			PreparedStatement statement3 = (PreparedStatement) con.prepareStatement("UPDATE xf_user SET is_verified = 1 WHERE user_id = " + getUserID(playerName));
 			statement3.executeUpdate();
+			//addToEkiNewUserTable(playerName);    Disabled for now
 			return 1; //Success!
 			}
 			else{
@@ -205,3 +239,4 @@ public class SQl  {
 	}
 	
 }
+	

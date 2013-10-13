@@ -82,6 +82,11 @@ public class ECSCommandExecutor implements CommandExecutor {
 			if(sender instanceof Player){
 				sender.sendMessage(ChatColor.AQUA + "[BNSync] Querying database...");
 				String playerName = sender.getName();
+				try {
+					sql.loadUserIDfromDBForVerifyCommand(playerName);
+				} catch (Exception e1) {
+					Bukkit.getLogger().severe(e1.getMessage());
+				}
 				
 				if(!SQl.playerUserIDs.containsKey(playerName)){
 					sender.sendMessage(ChatColor.RED + "User not found in website! Have you registered or did you mistype your Minecraft username on the site?");
@@ -98,10 +103,11 @@ public class ECSCommandExecutor implements CommandExecutor {
 					sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.RED + "We encountered an error while querying the database, please contact Staff");
 				}
 					if(verifyresult == 1){
-						sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.GREEN + "Succesfully verified! You have now build rights.");
+						sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.GREEN + "Successfully verified! You received build rights!");
 						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player addgroup " + playerName + " newbie");
 						Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + playerName + " default");
 						Bukkit.getLogger().info(playerName + " received build rights.");
+						Bukkit.broadcast("User " + playerName + " received build rights.", "ecsync.receive");
 					}
 				    if(verifyresult == 2){
 				    	sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.GREEN + "You are already verified!");

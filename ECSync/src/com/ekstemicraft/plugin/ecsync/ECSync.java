@@ -19,11 +19,11 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		//Enabling/registering  Listeners
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 				pm.registerEvents(new ECSyncListener(null), this);
-				
+
 		//Setting ECSCommandExecutor as the... CommandExecutor!
 		getCommand("sync").setExecutor(new ECSCommandExecutor(this));
 		getCommand("verify").setExecutor(new ECSCommandExecutor(this));
-			
+	
 		//Config file
 		File file = new File(getDataFolder() + File.separator + "config.yml");
 		if (!file.exists()){
@@ -35,8 +35,22 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 			this.getConfig().addDefault("database.database", "databasename");
 			this.getConfig().addDefault("database.password", "password");
 			this.saveConfig();
-			
+
 		}
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ECSync.main, new Runnable(){
+
+			@Override
+			public void run() {
+
+			   TwitchStream stream = new TwitchStream();
+				   stream.scheduler();
+
+				}		
+			
+		}, 300L);
+	
+		
 	}
 
 	@Override
