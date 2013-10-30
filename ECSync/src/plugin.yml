@@ -14,4 +14,7 @@ commands:
 permissions:
     ecsync.receive:
         description: Access to ECSync receive messages.
+    ecsync.dontremind:
+        description: Doesnt do the guest remainding for the player/group
+  
   

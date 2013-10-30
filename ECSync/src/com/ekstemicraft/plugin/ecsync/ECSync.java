@@ -3,6 +3,8 @@ package com.ekstemicraft.plugin.ecsync;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,6 +53,10 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		}, 300L);
 	
 		
+		
+		guestReminder();
+		
+		
 	}
 
 	@Override
@@ -59,4 +65,27 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 
 		main = null;
 	}
+	
+	public void guestReminder(){
+		
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(ECSync.main, new Runnable(){
+
+			@Override
+			public void run() {
+                for (Player p : Bukkit.getOnlinePlayers()){
+
+					if(!(p.hasPermission("ecsync.dontremind"))){
+					  p.sendMessage(ChatColor.AQUA + "Remember to register at our website! http://bladenode.net");
+					  p.sendMessage(ChatColor.AQUA + "When you have registered and verified your email, execute /verify in-game to receive build rights!");
+					}
+				}
+				
+				
+			}		
+			
+		}, 3600L, 3600L);
+		
+		
+	}
+	
  }

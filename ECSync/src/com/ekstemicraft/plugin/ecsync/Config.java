@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Config {
+	
 
 	public ECSync plugin;
 

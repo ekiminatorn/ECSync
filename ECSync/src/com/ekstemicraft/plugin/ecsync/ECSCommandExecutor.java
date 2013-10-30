@@ -82,6 +82,9 @@ public class ECSCommandExecutor implements CommandExecutor {
 			if(sender instanceof Player){
 				sender.sendMessage(ChatColor.AQUA + "[BNSync] Querying database...");
 				String playerName = sender.getName();
+				
+				
+				
 				try {
 					sql.loadUserIDfromDBForVerifyCommand(playerName);
 				} catch (Exception e1) {

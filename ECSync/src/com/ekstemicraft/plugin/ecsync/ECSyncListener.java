@@ -1,6 +1,8 @@
 package com.ekstemicraft.plugin.ecsync;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,6 +22,10 @@ private final ECSync plugin;
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void playerLogin(final AsyncPlayerPreLoginEvent event){
 		playerName = event.getName();
+		
+		
+		
+		
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ECSync.main, new Runnable(){
 
