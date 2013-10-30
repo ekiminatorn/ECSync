@@ -19,7 +19,7 @@ public class Config {
 	public String getGroupNamebyGroupID(String groupID){
 		return (String)simpleSyncronizationGroupMap.get(groupID);
 		
-		//gets groupname by Group ID from Configg
+		//gets groupname by Group ID from Config
 	}
 	
 	public String getWebappGroupIDbyGroupName(String groupName)
