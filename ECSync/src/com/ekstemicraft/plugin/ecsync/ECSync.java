@@ -33,6 +33,9 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		//Setting ECSCommandExecutor as the... CommandExecutor!
 		getCommand("sync").setExecutor(new ECSCommandExecutor(this));
 		getCommand("verify").setExecutor(new ECSCommandExecutor(this));
+		getCommand("savebook").setExecutor(new ECSCommandExecutor(this));
+		getCommand("book").setExecutor(new ECSCommandExecutor(this));
+		getCommand("booklist").setExecutor(new ECSCommandExecutor(this));
 		getCommand("promote").setExecutor(new ECSCommandExecutor(this));
 	
 		//Config file
