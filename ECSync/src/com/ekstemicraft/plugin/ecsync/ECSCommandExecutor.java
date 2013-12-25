@@ -125,7 +125,7 @@ public class ECSCommandExecutor implements CommandExecutor {
 		}
 	
 	if(label.equalsIgnoreCase("promote")){
-		
+		Bukkit.broadcastMessage("promote");
 		if(args.length == 1){
 			
 			String name = args[1];
