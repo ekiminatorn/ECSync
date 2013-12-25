@@ -124,21 +124,6 @@ public class ECSCommandExecutor implements CommandExecutor {
 			}
 		}
 		
-		
-	if(label.equalsIgnoreCase("deny")){
-		
-		if(args.length == 1){
-			
-			
-			
-			
-			
-		}else{
-			sender.sendMessage("Command syntax: /deny <playername>");
-			sender.sendMessage("This command denies guests from verifying themselves, good if there is a player, and you don't want him/her to get build rights");
-		}
-		
-	}
 	if(label.equalsIgnoreCase("savebook")){
 		
 		if(!(sender instanceof Player)){
@@ -195,6 +180,11 @@ public class ECSCommandExecutor implements CommandExecutor {
 		Player player = (Player) sender;
 		ECSBooks.bookList(player);
 	}
+	
+	
+	
+	
+	
 		
 	return true;
 	
