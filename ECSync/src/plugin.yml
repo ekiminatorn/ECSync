@@ -1,15 +1,24 @@
 name: ECSync
-description: Syncs player 'tags' to the forum software.
+description: Syncs player 'tags' to the forum software and other fun stuff
 author: Emil Ekstrom aka Uncle_Emil. On bukkit forums known as Ekstemi
 website: http://ekstemicraft.com
 main: com.ekstemicraft.plugin.ecsync.ECSync
-version: 2.0
+version: 2.1
 commands:
    sync:
       description: Sync player group to forum.
       usage: /<command> [player]
    verify:
       description: Verify player registration
+      usage: /<command>
+   savebook:
+      description: Save book as .yml
+      usage: /<command>
+   book:
+      description: Spawn in specific book
+      usage: /<command>
+   booklist:
+      description: See available books
       usage: /<command>
 permissions:
     ecsync.receive:

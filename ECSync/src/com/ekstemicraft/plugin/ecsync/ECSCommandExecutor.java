@@ -2,10 +2,12 @@ package com.ekstemicraft.plugin.ecsync;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.BookMeta;
 
 public class ECSCommandExecutor implements CommandExecutor {
 	
@@ -120,7 +122,79 @@ public class ECSCommandExecutor implements CommandExecutor {
 				    	sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.RED + "Email adress not confirmed, please confirm your email adress on the site, and try again!");
 				    }	
 			}
-		}	
+		}
+		
+		
+	if(label.equalsIgnoreCase("deny")){
+		
+		if(args.length == 1){
+			
+			
+			
+			
+			
+		}else{
+			sender.sendMessage("Command syntax: /deny <playername>");
+			sender.sendMessage("This command denies guests from verifying themselves, good if there is a player, and you don't want him/her to get build rights");
+		}
+		
+	}
+	if(label.equalsIgnoreCase("savebook")){
+		
+		if(!(sender instanceof Player)){
+			sender.sendMessage("Command cannot be ran from console! Bad boy!");
+			return true;
+		}
+		//Casting sender to Player
+		Player player = (Player) sender;
+		if(player.hasPermission("ecsync.savebook")){
+			
+			if(player.getItemInHand().getType().equals(Material.WRITTEN_BOOK)){
+				BookMeta meta = (BookMeta) player.getItemInHand().getItemMeta();
+				ECSBooks.saveBook(meta.getTitle(), meta);
+				
+				player.sendMessage("Book saved as " + meta.getTitle() + ".yml");
+				
+				
+			}else{
+				player.sendMessage("You need a written book in hand to use this command!");
+				return true;
+			}
+			
+			
+		}else{
+			player.sendMessage("No permishun! Uncle_Emil forbids!");
+			return true;
+		}
+		
+		
+		
+	}
+	if(label.equalsIgnoreCase("book")){
+	
+		
+			Player player = (Player) sender;
+			if(args.length == 0){
+				
+               player.sendMessage("Specify the name of the book, please.");
+			}
+			else{
+				ECSBooks book = ECSBooks.getBook(args[0]);
+				
+				if(book != null){
+					book.spawnBook(player, 0); // 0 for not being a new guy.
+				}
+				else{
+					player.sendMessage("That book doesn't exist!");
+				}
+			}
+					
+		
+	}
+	if(label.equalsIgnoreCase("booklist")){
+		Player player = (Player) sender;
+		ECSBooks.bookList(player);
+	}
 		
 	return true;
 	

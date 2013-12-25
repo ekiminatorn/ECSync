@@ -1,6 +1,8 @@
 package com.ekstemicraft.plugin.ecsync;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,6 +14,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ECSync extends JavaPlugin{
 
 
+	
+	public static File saveDir;
+	
+	public static ArrayList<ECSBooks> books = new ArrayList<ECSBooks>();
+	
+	
 public static ECSync main; //This makes sure I can access plugin.etcblah using <classname>.main in other classes.
 	@Override
 	public void onEnable() {
@@ -25,6 +33,9 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		//Setting ECSCommandExecutor as the... CommandExecutor!
 		getCommand("sync").setExecutor(new ECSCommandExecutor(this));
 		getCommand("verify").setExecutor(new ECSCommandExecutor(this));
+		getCommand("savebook").setExecutor(new ECSCommandExecutor(this));
+		getCommand("book").setExecutor(new ECSCommandExecutor(this));
+		getCommand("booklist").setExecutor(new ECSCommandExecutor(this));
 	
 		//Config file
 		File file = new File(getDataFolder() + File.separator + "config.yml");
@@ -51,10 +62,19 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 				}		
 			
 		}, 300L);
-	
-		
-		
+			
 		guestReminder();
+		
+	initSaveFile();
+	
+	
+	//Bookstuff
+	try {
+	 	books = ECSBooks.loadBooks();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	}
+		
 		
 		
 	}
@@ -87,5 +107,13 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		
 		
 	}
+	
+	private void initSaveFile(){
+		
+		saveDir = new File(getDataFolder(), "Books");
+		saveDir.mkdirs();
+	}
+	
+	
 	
  }

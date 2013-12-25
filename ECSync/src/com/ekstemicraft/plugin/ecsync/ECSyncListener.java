@@ -1,12 +1,15 @@
 package com.ekstemicraft.plugin.ecsync;
 
+
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class ECSyncListener implements Listener {
 	
@@ -17,7 +20,30 @@ private final ECSync plugin;
 	this.plugin = plugin;
 
 	}
+	@EventHandler
+	public void playerJoin(final PlayerJoinEvent event){
+
+		String bookName = "loll";
+		int newguy = 1;
+		Player player = event.getPlayer();
+		
+		Bukkit.broadcastMessage("Hello");
+	ECSBooks book = ECSBooks.getBook(bookName);
 	
+	if(book != null)
+	{
+		book.spawnBook(player, newguy);
+	}
+	else
+	{
+		Bukkit.broadcastMessage("Not found!");
+	}
+		
+		
+		
+		
+	}
+
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void playerLogin(final AsyncPlayerPreLoginEvent event){
