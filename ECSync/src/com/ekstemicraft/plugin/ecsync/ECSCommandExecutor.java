@@ -125,16 +125,31 @@ public class ECSCommandExecutor implements CommandExecutor {
 		}
 	
 	if(label.equalsIgnoreCase("promote")){
-		Bukkit.broadcastMessage("promote");
-		if(args.length == 1){
+
+		if(sender.hasPermission("ecsync.promote")){
+		
+		PermissionManagerVault perms = new PermissionManagerVault();
 			
-			String name = args[1];
-			Bukkit.broadcastMessage(name);
+		if(args.length == 1){
+			String playerName = args[0];
+           String[] groups = perms.getGroups(playerName);
+			Bukkit.broadcastMessage(playerName);
+			if(groups.length == 0){
+				Bukkit.broadcastMessage("User not found");
+			}
+			if(!(groups.length > 1)){
+				Bukkit.broadcastMessage(groups[0]);
+			}else{
+				Bukkit.broadcastMessage("Too many groups to handle!");
+			}
+			
+			
+			
 			
 		}
 		
 		
-		
+		}	
 	}
 		
 	return true;
