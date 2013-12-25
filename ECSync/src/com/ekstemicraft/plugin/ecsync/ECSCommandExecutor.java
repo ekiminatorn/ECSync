@@ -123,65 +123,20 @@ public class ECSCommandExecutor implements CommandExecutor {
 				    }	
 			}
 		}
+	
+	if(label.equalsIgnoreCase("promote")){
 		
-	if(label.equalsIgnoreCase("savebook")){
-		
-		if(!(sender instanceof Player)){
-			sender.sendMessage("Command cannot be ran from console! Bad boy!");
-			return true;
-		}
-		//Casting sender to Player
-		Player player = (Player) sender;
-		if(player.hasPermission("ecsync.savebook")){
+		if(args.length == 1){
 			
-			if(player.getItemInHand().getType().equals(Material.WRITTEN_BOOK)){
-				BookMeta meta = (BookMeta) player.getItemInHand().getItemMeta();
-				ECSBooks.saveBook(meta.getTitle(), meta);
-				
-				player.sendMessage("Book saved as " + meta.getTitle() + ".yml");
-				
-				
-			}else{
-				player.sendMessage("You need a written book in hand to use this command!");
-				return true;
-			}
+			String name = args[1];
+			Bukkit.broadcastMessage(name);
 			
-			
-		}else{
-			player.sendMessage("No permishun! Uncle_Emil forbids!");
-			return true;
 		}
 		
 		
 		
-	}
-	if(label.equalsIgnoreCase("book")){
-	
-		
-			Player player = (Player) sender;
-			if(args.length == 0){
-				
-               player.sendMessage("Specify the name of the book, please.");
-			}
-			else{
-				ECSBooks book = ECSBooks.getBook(args[0]);
-				
-				if(book != null){
-					book.spawnBook(player, 0); // 0 for not being a new guy.
-				}
-				else{
-					player.sendMessage("That book doesn't exist!");
-				}
-			}
-					
 		
 	}
-	if(label.equalsIgnoreCase("booklist")){
-		Player player = (Player) sender;
-		ECSBooks.bookList(player);
-	}
-	
-	
 	
 	
 	
