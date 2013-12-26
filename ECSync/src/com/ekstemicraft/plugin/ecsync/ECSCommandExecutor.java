@@ -151,6 +151,7 @@ public class ECSCommandExecutor implements CommandExecutor {
 					break;
 				case "regular":
 					groupToChange = "member";
+					
 					break;
 				case "member":
 					groupToChange = "respected";
@@ -231,6 +232,8 @@ public class ECSCommandExecutor implements CommandExecutor {
 	 * If verifyresult is 1: Player gets buildrights (Changes permissiongroup to newbie).
 	 * If verifyresult is 2: Sends a message to the player telling that he/she is already verified at the site.
 	 * If verifyresult is 3: Sends a message to the player telling that he/she email adress is not confirmed.
+	 * 
+	 * promote: Promoting command. Promotes the specified user according to the rank tree or manually specifying the group to promote to.
 	 */
 	}
 
