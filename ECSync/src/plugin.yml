@@ -4,6 +4,7 @@ author: Emil Ekstrom aka Uncle_Emil. On bukkit forums known as Ekstemi
 website: http://ekstemicraft.com
 main: com.ekstemicraft.plugin.ecsync.ECSync
 version: 2.1
+depend: [Vault]
 commands:
    sync:
       description: Sync player group to forum.
@@ -21,12 +22,14 @@ commands:
       description: See available books
       usage: /<command>
    promote:
-      description: See available books
-      usage: /<command>
+      description: Promote users
+      usage: /<command> <username> [groupname] [] = optional
 permissions:
     ecsync.receive:
         description: Access to ECSync receive messages.
     ecsync.dontremind:
         description: Doesnt do the guest remainding for the player/group
+    ecsync.promote:
+        description: Access to promoting players
   
   

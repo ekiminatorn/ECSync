@@ -2,24 +2,23 @@ package com.ekstemicraft.plugin.ecsync;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.BookMeta;
 
 public class ECSCommandExecutor implements CommandExecutor {
 	
 	@SuppressWarnings("unused")
 	private ECSync plugin;
 	SQl sql = new SQl();
+	public String groupToChange;
+	boolean isAllowedToChange = true;
 	
 	
 	public ECSCommandExecutor(ECSync plugin){
 		
 		this.plugin = plugin;
-		
 	}
 	
 	@Override
@@ -125,31 +124,101 @@ public class ECSCommandExecutor implements CommandExecutor {
 		}
 	
 	if(label.equalsIgnoreCase("promote")){
-
+        //Permission check
 		if(sender.hasPermission("ecsync.promote")){
 		
 		PermissionManagerVault perms = new PermissionManagerVault();
-			
+		//Checks if the command has 1 argument (the playername to promote)	
 		if(args.length == 1){
 			String playerName = args[0];
            String[] groups = perms.getGroups(playerName);
-			Bukkit.broadcastMessage(playerName);
+
+			//Checks if user is found, or user is not in any groups at all (Usually guest if no groups found)
 			if(groups.length == 0){
-				Bukkit.broadcastMessage("User not found");
-			}
+				sender.sendMessage(ChatColor.RED + "User not found or is guest..?");
+				return true;
+			} 
+			//If there is only ONE group
 			if(!(groups.length > 1)){
-				Bukkit.broadcastMessage(groups[0]);
+				/*
+				 * Don't be confused that we use '1' to test how many arguments there is, and that we use 0 in groups to get the argument
+				 */
+				String currentGroup = groups[0];
+                isAllowedToChange = true;
+				switch(currentGroup.toLowerCase()){
+				case "newbie":
+					groupToChange = "regular";
+					break;
+				case "regular":
+					groupToChange = "member";
+					break;
+				case "member":
+					groupToChange = "respected";
+					break;
+				case "respected":
+					groupToChange = "trusted";
+					break;
+				case "trusted":
+					groupToChange = "veteran";
+					break;
+				case "veteran":
+					isAllowedToChange = false;
+					break;
+				default:
+					isAllowedToChange = false;
+					break;
+				}
+				if(isAllowedToChange){
+					perms.promoteUser(playerName, groupToChange, currentGroup.toLowerCase());
+					sender.sendMessage(ChatColor.AQUA + playerName + ChatColor.GREEN +  " has been promoted to " + ChatColor.AQUA + groupToChange);
+				}else{
+					sender.sendMessage(ChatColor.RED + "I'm confused! Is the player already end of line (Veteran) or in special group? (Architect, etc.)");
+				}
+			//If there is more than one group, send error message to promoter	
 			}else{
-				Bukkit.broadcastMessage("Too many groups to handle!");
+				sender.sendMessage("User is in multiple groups. To be on the safe-side, I wont promote automatically. Has to be done manually with these commands:");
+				sender.sendMessage("Check users groups with: /perm player groups <playername>");
+				sender.sendMessage("Remove user from the unnecessary groups with /perm player removegroup <playername> <groupname>");
+				sender.sendMessage("After that, promote user manually to the group with /perm player addgroup <playername> <groupnametopromote>");
+				sender.sendMessage(ChatColor.RED + "If in doubt, ask Emil!");
+			}
+				
+		}
+		//Section where we manually specify what group to put in
+		//Checks if there is two arguments (playername and what group to promote to.)
+		if(args.length == 2){
+			String playerName = args[0];
+			String groupToChange = args[1];
+			String[] groups = perms.getGroups(playerName);
+			
+			if(groups.length == 0){
+				sender.sendMessage(ChatColor.RED + "User not found or is guest..?");
+				return true;
+			}
+			//If there is only ONE group
+			if(!(groups.length > 1)){
+				String oldGroup = groups[0];
+				
+				if(perms.groupExist(groupToChange)){
+                   perms.promoteUser(playerName, groupToChange, oldGroup.toLowerCase());
+					sender.sendMessage(ChatColor.AQUA + playerName + ChatColor.GREEN +  " has been promoted to " + ChatColor.AQUA + groupToChange);
+				
+				}else{
+					sender.sendMessage(ChatColor.RED + "The specified group is not found");
+				}
+				
+			}else{
+				sender.sendMessage("User is in multiple groups. To be on the safe-side, I wont promote automatically. Has to be done manually with these commands:");
+				sender.sendMessage("Check users groups with: /perm player groups <playername>");
+				sender.sendMessage("Remove user from the unnecessary groups with /perm player removegroup <playername> <groupname>");
+				sender.sendMessage("After that, promote user manually to the group with /perm player addgroup <playername> <groupnametopromote>");
+				sender.sendMessage(ChatColor.RED + "If in doubt, ask Emil!");
 			}
 			
-			
-			
-			
+		}	
+		
 		}
 		
-		
-		}	
 	}
 		
 	return true;

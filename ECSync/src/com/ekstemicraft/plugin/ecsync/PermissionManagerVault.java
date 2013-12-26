@@ -2,6 +2,8 @@ package com.ekstemicraft.plugin.ecsync;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import net.milkbowl.vault.permission.Permission;
 
@@ -15,6 +17,15 @@ public class PermissionManagerVault {
 		vault = rsp.getProvider();
 				
 	}
+	
+	public String[] getAllPermissionGroups(){
+		
+
+		return vault.getGroups();
+		/** Gets all the available Permission groups.
+		 * 
+		 */
+	}	
 	
 	public String[] getGroups(String playerName){
 		
@@ -36,6 +47,31 @@ public class PermissionManagerVault {
 		return vault.playerRemoveGroup((String) null, playerName, groupOld);
 		/** Removes the user from group, lovely!
 		 * 
+		 */
+	}
+	public boolean groupExist(String value){
+		String[] groups = getAllPermissionGroups();
+		
+		for (int i = 0; i < groups.length; i++){
+			if(groups[i].equalsIgnoreCase(value)){
+				return true;
+			}
+		}
+		
+		return false;
+		/** 
+		 * Checks if the group specified actually exists
+		 */
+	}
+	public void promoteUser(String playerName, String newGroup, String oldGroup){
+		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player addgroup " + playerName + " " + newGroup);
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + playerName + " " + oldGroup);
+		
+		Player playerWhoGotPromoted = Bukkit.getPlayerExact(playerName);
+		playerWhoGotPromoted.sendMessage(ChatColor.GOLD + "You have been promoted to " + newGroup + "!");
+		/**
+		 * Promotes the user. (Adds to new group and removes from the old one) 
+		 * I don't really trust the methods up there, so I gonna make it manually.
 		 */
 	}
 		
