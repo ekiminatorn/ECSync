@@ -68,7 +68,7 @@ public class PermissionManagerVault {
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + playerName + " " + oldGroup);
 		
 		Player playerWhoGotPromoted = Bukkit.getPlayerExact(playerName);
-		Bukkit.broadcastMessage(ChatColor.AQUA + playerWhoGotPromoted.getName() + ChatColor.GOLD + "has been promoted to" + ChatColor.AQUA + newGroup);
+		Bukkit.broadcastMessage(ChatColor.AQUA + playerWhoGotPromoted.getName() + ChatColor.GOLD + " has been promoted to " + ChatColor.AQUA + newGroup);
 		/**
 		 * Promotes the user. (Adds to new group and removes from the old one) 
 		 * I don't really trust the methods up there, so I gonna make it manually.
