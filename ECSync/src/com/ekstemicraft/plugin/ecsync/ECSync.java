@@ -52,7 +52,7 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 
 		}
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ECSync.main, new Runnable(){
+		/*Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ECSync.main, new Runnable(){
 
 			@Override
 			public void run() {
@@ -62,7 +62,7 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 
 				}		
 			
-		}, 300L);
+		}, 300L); */
 			
 		guestReminder();
 		
