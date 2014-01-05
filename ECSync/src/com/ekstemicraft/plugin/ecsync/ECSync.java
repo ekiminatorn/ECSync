@@ -11,14 +11,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-public final class ECSync extends JavaPlugin{
-
-
-	
-	public static File saveDir;
-	
-	public static ArrayList<ECSBooks> books = new ArrayList<ECSBooks>();
-	
+public final class ECSync extends JavaPlugin{	
 	
 public static ECSync main; //This makes sure I can access plugin.etcblah using <classname>.main in other classes.
 	@Override
@@ -33,9 +26,6 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		//Setting ECSCommandExecutor as the... CommandExecutor!
 		getCommand("sync").setExecutor(new ECSCommandExecutor(this));
 		getCommand("verify").setExecutor(new ECSCommandExecutor(this));
-		getCommand("savebook").setExecutor(new ECSCommandExecutor(this));
-		getCommand("book").setExecutor(new ECSCommandExecutor(this));
-		getCommand("booklist").setExecutor(new ECSCommandExecutor(this));
 		getCommand("promote").setExecutor(new ECSCommandExecutor(this));
 	
 		//Config file
@@ -64,19 +54,7 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 			
 		}, 300L); */
 			
-		guestReminder();
-		
-	initSaveFile();
-	
-	
-	//Bookstuff
-	try {
-	 	books = ECSBooks.loadBooks();
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	}
-		
-		
+		guestReminder();		
 		
 	}
 
@@ -108,13 +86,5 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		
 		
 	}
-	
-	private void initSaveFile(){
-		
-		saveDir = new File(getDataFolder(), "Books");
-		saveDir.mkdirs();
-	}
-	
-	
 	
  }

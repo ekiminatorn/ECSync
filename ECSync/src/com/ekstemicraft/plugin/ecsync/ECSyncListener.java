@@ -3,12 +3,10 @@ package com.ekstemicraft.plugin.ecsync;
 
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 public class ECSyncListener implements Listener {
 	
@@ -19,37 +17,10 @@ private final ECSync plugin;
 	this.plugin = plugin;
 
 	}
-	@EventHandler
-	public void playerJoin(final PlayerJoinEvent event){
-
-		String bookName = "loll";
-		int newguy = 1;
-		Player player = event.getPlayer();
-		
-	ECSBooks book = ECSBooks.getBook(bookName);
-	
-	if(book != null)
-	{
-		book.spawnBook(player, newguy);
-	}
-	else
-	{
-		
-	}
-		
-		
-		
-		
-	}
-
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void playerLogin(final AsyncPlayerPreLoginEvent event){
-		playerName = event.getName();
-		
-		
-		
-		
+		playerName = event.getName();	
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ECSync.main, new Runnable(){
 
@@ -72,5 +43,4 @@ private final ECSync plugin;
 		 */
 	}
 	
-
 }
