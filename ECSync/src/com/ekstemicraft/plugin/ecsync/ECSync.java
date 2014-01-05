@@ -1,8 +1,6 @@
 package com.ekstemicraft.plugin.ecsync;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
