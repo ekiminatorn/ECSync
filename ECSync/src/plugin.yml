@@ -12,15 +12,6 @@ commands:
    verify:
       description: Verify player registration
       usage: /<command>
-   savebook:
-      description: Save book as .yml
-      usage: /<command>
-   book:
-      description: Spawn in specific book
-      usage: /<command>
-   booklist:
-      description: See available books
-      usage: /<command>
    promote:
       description: Promote users
       usage: /<command> <username> [groupname] [] = optional
