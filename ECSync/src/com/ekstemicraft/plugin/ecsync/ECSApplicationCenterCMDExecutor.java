@@ -47,8 +47,48 @@ public class ECSApplicationCenterCMDExecutor implements CommandExecutor {
 							
 				}				
 			}else{
-				sender.sendMessage(ChatColor.RED + "This command is ONLY for the Application Center. Incident reported to Administrators");
+				sender.sendMessage(ChatColor.RED + "This command is ONLY for the Application Center. Incident logged");
+				String logplayer = sender.getName();
+				Bukkit.getLogger().severe(logplayer + "used applicationcenterrejected command. Action denied.");
 			}
+			
+		}
+		
+		//Send message to applicant of approval if online
+		if(label.equalsIgnoreCase("applicationcenterapproved")){
+			
+			if(!(sender instanceof Player)){
+				if(args.length == 0){
+					//If no args specified
+					Bukkit.getLogger().severe("Applicationcenterapproved command got no arguments!");
+					return true;	
+				}
+				if(args.length == 1){
+					//Approved player argument
+					//Set player to newbie and take away guest
+					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player addgroup " + args[0] + " newbie");
+					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "perm player removegroup " + args[0] + " default");
+					
+					if(Bukkit.getPlayerExact(args[0]) == null){
+						//Approved player not online
+						return true;
+					}else{
+                         Bukkit.getPlayerExact(args[0]).sendMessage(ChatColor.AQUA + "[BNAC] Congratulations! Your application has been " + ChatColor.GREEN + "approved!");
+                         
+					}
+				
+				}else{
+					return true;
+				}
+							
+			}else{
+				sender.sendMessage(ChatColor.RED + "This command is ONLY for the Application Center. Incident logged");
+				String logplayer = sender.getName();
+				Bukkit.getLogger().severe(logplayer + "used applicationcenterapproved command. Action denied.");
+			}
+			
+			
+			
 			
 		}
 		

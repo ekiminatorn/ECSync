@@ -18,6 +18,9 @@ commands:
    applicationcenterrejected:
       description: Unknown
       usage: /<command>
+   applicationcenterapproved:
+      description: Unknown
+      usage: /<command>
 permissions:
     ecsync.receive:
         description: Access to ECSync receive messages.
