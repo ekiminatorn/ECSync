@@ -91,11 +91,17 @@ public class ECSApplicationCenterCMDExecutor implements CommandExecutor {
 			
 			
 		}
-		
-		
-		
-		
-		
+		//Notify online staff members of pending applications
+		if(label.equalsIgnoreCase("applicationcenternotify")){
+			if(sender instanceof Player){
+				sender.sendMessage(ChatColor.RED + "This command is ONLY for the Application Center. Incident logged");
+				String logplayer = sender.getName();
+				Bukkit.getLogger().severe(logplayer + "used applicationcenternotify command. Action denied.");
+			}else{
+			Bukkit.broadcast(ChatColor.AQUA + "[BNAC] NOTE! Application awaiting review!", "ecsync.receive");
+
+			}
+		}		
 		
 	return true;	
 	}

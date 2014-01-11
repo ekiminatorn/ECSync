@@ -27,6 +27,7 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
 		getCommand("promote").setExecutor(new ECSCommandExecutor(this));
 		getCommand("applicationcenterrejected").setExecutor(new ECSApplicationCenterCMDExecutor(this));
 		getCommand("applicationcenterapproved").setExecutor(new ECSApplicationCenterCMDExecutor(this));
+		getCommand("applicationcenternotify").setExecutor(new ECSApplicationCenterCMDExecutor(this));
 	
 		//Config file
 		File file = new File(getDataFolder() + File.separator + "config.yml");
