@@ -15,6 +15,9 @@ commands:
    promote:
       description: Promote users
       usage: /<command> <username> [groupname] [] = optional
+   applicationcenterrejected:
+      description: Unknown
+      usage: /<command>
 permissions:
     ecsync.receive:
         description: Access to ECSync receive messages.
