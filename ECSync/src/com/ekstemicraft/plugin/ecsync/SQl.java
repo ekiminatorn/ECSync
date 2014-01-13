@@ -81,6 +81,8 @@ public class SQl  {
  */
   }
 	
+	@SuppressWarnings("unused")
+	//That warning is bullshit. Had to add it because IDE is being stupid
 	public void webUserGroupID(String playerName) throws Exception{
 
 		pl = ECSync.main;
@@ -93,6 +95,10 @@ public class SQl  {
 		String groupID = null;
 		if (result.next()){
 			groupID = result.getString("user_group_id");
+		}
+		//Checks if user is in Guestapproved,guestrejected or guest pending forum group, and skips syncing them.
+		if(groupID.equalsIgnoreCase(Integer.toString(21)) || groupID.equalsIgnoreCase(Integer.toString(22)) || groupID.equalsIgnoreCase(Integer.toString(20))){
+			return;
 		}
 		if (groupID == null){
 			con.close();
