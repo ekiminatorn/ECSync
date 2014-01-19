@@ -75,8 +75,9 @@ public static ECSync main; //This makes sure I can access plugin.etcblah using <
                 for (Player p : Bukkit.getOnlinePlayers()){
 
 					if(!(p.hasPermission("ecsync.dontremind"))){
-					  p.sendMessage(ChatColor.AQUA + "Remember to register at our website! http://bladenode.net");
-					  p.sendMessage(ChatColor.AQUA + "When you have registered and verified your email, execute /verify in-game to receive build rights!");
+					  p.sendMessage(ChatColor.AQUA + "Hey! Welcome to BladeNode my friend!");
+					  p.sendMessage(ChatColor.AQUA + "We are running a greylist, which means, guests like you cannot build before applying for membership.");
+					  p.sendMessage(ChatColor.AQUA + "To apply, simply go to our website, and register. After that you should see 'Apply' link on the navigation bar.");
 					}
 				}
 				

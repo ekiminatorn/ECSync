@@ -81,6 +81,9 @@ public class ECSCommandExecutor implements CommandExecutor {
 		
 		if(label.equalsIgnoreCase("verify")){
 			if(sender instanceof Player){
+				sender.sendMessage("/verify not in use anymore! You need to Apply at our website.");
+				//This code not in use anymore!
+				/*
 				sender.sendMessage(ChatColor.AQUA + "[BNSync] Querying database...");
 				String playerName = sender.getName();
 				
@@ -119,7 +122,7 @@ public class ECSCommandExecutor implements CommandExecutor {
 				    }
 				    if(verifyresult == 3){
 				    	sender.sendMessage(ChatColor.AQUA + "[BNSync] " + ChatColor.RED + "Email adress not confirmed, please confirm your email adress on the site, and try again!");
-				    }	
+				    }	*/
 			}
 		}
 	
